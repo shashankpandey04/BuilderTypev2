@@ -34,8 +34,8 @@ RUN apk add --no-cache dumb-init
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --only=production
+# Copy node_modules from builder
+COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built Next.js from builder
 COPY --from=builder /app/.next ./.next
