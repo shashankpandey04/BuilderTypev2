@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BuilderRush v2
 
-## Getting Started
+BuilderRush v2 is a real-time typing competition game designed for event booths with shared leaderboard updates across multiple systems.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router + TypeScript
+- Tailwind CSS v4
+- Custom Node server with Socket.IO
+- MongoDB + Mongoose
+
+## Core Features
+
+- 45-second typing rounds
+- Hidden input with real-time character highlighting
+- Client-side WPM and accuracy calculations
+- Final score sync through Socket.IO (`score:final`)
+- Global top-10 leaderboard broadcast (`leaderboard:update`)
+- MongoDB persistence for all submitted scores
+
+## Environment Variables
+
+Create a `.env.local` from `.env.example` and set values:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+MONGODB_URI=mongodb://127.0.0.1:27017/builderrush
+NEXT_PUBLIC_SOCKET_URL=
+PORT=3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`NEXT_PUBLIC_SOCKET_URL` can stay empty for same-origin socket connections.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Open `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+## Production Mode
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/page.tsx` main game UI and socket orchestration
+- `components/NameInput.tsx` player name + start controls
+- `components/TypingArea.tsx` typing surface and live metrics
+- `components/ResultModal.tsx` final round summary and replay
+- `components/Leaderboard.tsx` shared global ranking table
+- `hooks/useTypingEngine.ts` game timing and metric engine
+- `lib/paragraphs.ts` predefined paragraph pool
+- `lib/socket.ts` singleton socket client
+- `lib/db.ts` MongoDB connection and Score model
+- `server/index.ts` custom Next.js + Socket.IO server

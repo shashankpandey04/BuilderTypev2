@@ -1,0 +1,1 @@
+export { paragraphs } from "./paragraphs";
