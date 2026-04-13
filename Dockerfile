@@ -18,7 +18,6 @@ COPY app/ ./app/
 COPY hooks/ ./hooks/
 COPY lib/ ./lib/
 COPY public/ ./public/
-COPY next-env.d.ts ./
 
 # Build Next.js
 RUN npm run build
@@ -44,7 +43,6 @@ COPY --from=builder /app/public ./public
 # Copy server code
 COPY server/ ./server/
 COPY tsconfig.json ./
-COPY next-env.d.ts ./
 
 # Expose port
 EXPOSE 3000
