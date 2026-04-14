@@ -14,8 +14,8 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "BuilderRush v2",
-  description: "Real-time booth typing competition with shared leaderboard",
+  title: "BuilderType",
+  description: "A 45-second typing game in just 1 hour using Kiro featuring a real-time typing speed test, live leaderboard, and top 10 player highlights, all wrapped in an AWS Builder Center inspired theme.",
 };
 
 export default function RootLayout({
