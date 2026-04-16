@@ -260,7 +260,7 @@ export default function Page() {
             </div>
           </section>
 
-          <section className="grid gap-6 xl:grid-cols-[1fr_360px]">
+          <section>
             <div className="space-y-5">
               <NameInput
                 name={name}
@@ -287,8 +287,6 @@ export default function Page() {
                 inputRef={inputRef}
               />
             </div>
-
-            <Leaderboard entries={leaderboard} />
           </section>
         </div>
       )}

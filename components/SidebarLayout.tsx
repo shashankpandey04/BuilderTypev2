@@ -4,15 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 export function SidebarLayout({ children }: { children: React.ReactNode }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <div className="flex min-h-screen flex-col bg-[rgb(22,29,38)] text-white">
-      {/* Header */}
       <header className="sticky top-0 z-40 h-16 border-b border-white/10 bg-[rgb(22,29,38)]/95 backdrop-blur">
         <div className="mx-auto flex h-full w-full max-w-[1800px] items-center gap-4 px-4 md:px-6">
-
-          {/* Collapse toggle */}
           <button
             type="button"
             onClick={() => setCollapsed((c) => !c)}
@@ -65,7 +62,6 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
       </header>
 
       <div className="flex min-h-0 flex-1">
-        {/* Sidebar */}
         <aside
           className={`
             hidden lg:flex flex-col shrink-0 border-r border-white/10 bg-[rgb(22,29,38)]/92
@@ -73,7 +69,6 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
             ${collapsed ? "w-14" : "w-64"}
           `}
         >
-          {/* Collapsed: icon-only nav */}
           {collapsed ? (
             <nav className="flex flex-col items-center gap-1 px-2 py-6">
               {/* Home icon */}
@@ -86,7 +81,6 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
                   <path d="M7.5 1L1 6.5V14h4.5v-4h4v4H14V6.5L7.5 1Z" fill="currentColor"/>
                 </svg>
               </Link>
-              {/* Leaderboard icon */}
               <Link
                 href="/leaderboard"
                 title="Leaderboard"
