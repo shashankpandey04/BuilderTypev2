@@ -23,8 +23,8 @@ export function useTypingEngine({ duration = 45, onFinish }: TypingEngineOptions
   const [phase, setPhase] = useState<GamePhase>("idle");
   const [countdownLeft, setCountdownLeft] = useState(3);
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const countdownRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const finishSentRef = useRef(false);
 
   const totalTyped = input.length;
@@ -52,8 +52,11 @@ export function useTypingEngine({ duration = 45, onFinish }: TypingEngineOptions
       return 0;
     }
 
-    return Math.max(0, Math.round((totalTyped / 5) / elapsedMinutes));
-  }, [elapsedMinutes, totalTyped]);
+    const rawWpm = (totalTyped / 5) / elapsedMinutes;
+    const accuracyRatio = totalTyped > 0 ? correctChars / totalTyped : 1;
+
+    return Math.max(0, Math.round(rawWpm * accuracyRatio));
+  }, [correctChars, elapsedMinutes, totalTyped]);
 
   const accuracy = useMemo(() => {
     if (totalTyped <= 0) {
@@ -111,7 +114,7 @@ export function useTypingEngine({ duration = 45, onFinish }: TypingEngineOptions
     }
 
     intervalRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft((prev: number) => {
         if (prev <= 1) {
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -144,7 +147,7 @@ export function useTypingEngine({ duration = 45, onFinish }: TypingEngineOptions
     }
 
     countdownRef.current = setInterval(() => {
-      setCountdownLeft((prev) => {
+      setCountdownLeft((prev: number) => {
         if (prev <= 1) {
           if (countdownRef.current) {
             clearInterval(countdownRef.current);
